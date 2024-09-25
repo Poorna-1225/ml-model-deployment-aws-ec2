@@ -1,26 +1,62 @@
-# ml-model-deployment-aws-ec2
-Create the ML model
-Export it into a model using pickle
+# ML Model Deployment on AWS EC2
 
-#Deployment steps:
-create an aws account
-create EC2 instance and configure it with all the configurations required
- selecting the os of the instance
- creating or using the exist keypair(we use this keypair to connect with the ec2 instance we created. Inshot we use it as a protection key)
- updating the inboud rules. open instance-> security-> choose security group-> add rule and save rule.
- next download putty and winscp
-  winscp: WinSCP is primarily used for secure file transfers between a local computer and a remote server(ec2 instance we created)
-   we need to login first. 
-    login steps: hostname(we get this from ec2 instance configuration details. click ssh connect and copy the address mentioned) and enter user name(by default it will be the os we select. If not, it will be the name you mentioned) and then password would be the keypair (.pem file) we use to connect with ec2 instance created. if you are not able to upload .pem file convert it into .ppk file and upload it. and click on login.
-    then transfer the files from local machine to server.
+This guide outlines the steps to deploy a machine learning model on an AWS EC2 instance using Flask.
 
-    acess the ec2 server using putty and install
-      python3( sudo apt install python3)
-      install all the required packages or libraries metioned in the requirements.txt file  (pip install -r requirements.txt)
+## Create the ML Model
 
+* Export your trained model into a `.pkl` file using pickle.
 
-    run the app.py file (python3 app.py)
-    using ec2 puvlic ipv4 adderess access the url and copy paste with :8080  in browser and you can see the flask app you built.
-    
-      
-  
+## Deployment Steps
+
+1. **Create an AWS Account:** If you don't have one, sign up at [https://aws.amazon.com/](https://aws.amazon.com/).
+
+2. **Create an EC2 Instance:**
+   * Log in to the AWS Management Console.
+   * Navigate to the EC2 service.
+   * Click on "Launch Instance."
+   * Choose an Amazon Machine Image (AMI) with your desired operating system.
+   * Select an instance type.
+   * Configure instance details.
+   * Create or select an existing key pair.
+   * Launch the instance.
+
+3. **Configure Security Group:**
+   * Open the EC2 instance details.
+   * Go to the "Security" tab.
+   * Click on the security group.
+   * Add an inbound rule to allow traffic on port 8080 (or your desired port).
+
+4. **Download PuTTY and WinSCP:**
+   * Download and install from their official websites.
+
+5. **Use WinSCP to Transfer Files:**
+   * Open WinSCP.
+   * Enter the hostname (public IP or DNS name) of your EC2 instance.
+   * Enter the username and select the private key file (`.ppk`).
+   * Click "Login."
+   * Transfer `model.pkl`, `app.py`, and `requirements.txt` to the EC2 instance.
+
+6. **Access the EC2 Server using PuTTY:**
+   * Open PuTTY.
+   * Enter the hostname of your EC2 instance.
+   * Enter the username and select the private key file.
+   * Click "Open."
+
+7. **Install Dependencies:**
+   * Install Python3: 
+     ```bash
+     sudo apt update && sudo apt install python3-pip
+     ```
+   * Install project dependencies: 
+     ```bash
+     pip install -r requirements.txt
+     ```
+
+8. **Run the Flask App:**
+   ```bash
+   python3 app.py
+
+9. **Access the Application:**
+   * Open your web browser.
+   * Enter http://<EC2 public IPv4 address>:8080
+   * Note: Replace placeholders like <EC2 public IPv4 address> with actual values.
